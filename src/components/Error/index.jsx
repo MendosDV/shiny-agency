@@ -28,7 +28,9 @@ export default function Error () {
     <ErrorWrapper>
       <ErrorTitle>Oups...</ErrorTitle>
       <Illustration src={Oups} alt='error'/>
-      <ErrorSubtitle>Il semblerait qu'il y ait un problème</ErrorSubtitle>
+      <ErrorSubtitle>
+        Il semblerait qu'il y ait un problème
+      </ErrorSubtitle>
     </ErrorWrapper>
   )
 }

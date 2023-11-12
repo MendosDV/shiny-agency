@@ -8,6 +8,7 @@ import Error from './components/Error'
 import Freelances from './pages/Freelances/'
 import Results from './pages/Results/'
 import { createGlobalStyle } from 'styled-components'
+import Footer from './components/Footer'
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -31,6 +32,7 @@ ReactDOM.render(
           <Route path="/freelances" element={<Freelances />} />
           <Route path="*" element={<Error />} />
       </Routes>
+      <Footer />
     </Router>
   </React.StrictMode>,
 document.getElementById('root')
