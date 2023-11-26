@@ -56,7 +56,6 @@ const LoaderWrapper = styled.div`
 export function formatQueryParams(answers) {
   // Récupère les clés de l'object
   const answerNumbers = Object.keys(answers)
-  console.log(answerNumbers)
   // Utilise reduce pour construire la chaîne de requête
   return answerNumbers.reduce((previousParams, answerNumber, index) => {
     // Regarde s'il s'agit du premier paramètre
@@ -81,20 +80,16 @@ function Results() {
   const { theme } = useTheme()
   const { answers } = useContext(SurveyContext)
   const fetchParams = formatQueryParams(answers)
-  console.log('=== fetchParams ===', fetchParams)
 
   const { data, isLoading, error } = useFetch(
     `http://localhost:8000/results?${fetchParams}`
   )
-
-  console.log('==== data ====', data)
 
   if (error) {
     return <span>Il y a un problème</span>
   }
 
   const resultsData = data?.resultsData
-  console.log('==== resultsData ====', resultsData)
 
   return isLoading ? (
     <LoaderWrapper>
