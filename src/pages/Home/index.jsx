@@ -39,6 +39,9 @@ const StyledTitle = styled.h2`
 const Illustration = styled.img`
   flex: 1;
 `
+export function sum(a, b) {
+  return a + b
+}
 
 export default function Home() {
   return (
@@ -47,7 +50,7 @@ export default function Home() {
         <LeftCol>
           <StyledTitle>
             Repérez vos besoins, on s’occupe du reste, avec les meilleurs
-            talents
+            talents {sum(49, 1)}
           </StyledTitle>
           <StyledLink to="/survey/1" $isFullLink>
             Faire le test

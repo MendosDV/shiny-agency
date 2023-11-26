@@ -2,9 +2,8 @@ import { useContext } from 'react'
 import { SurveyContext } from '../../utils/context'
 import styled from 'styled-components'
 import colors from '../../utils/style/colors'
-import { useFetch } from '../../utils/hooks'
+import { useFetch, useTheme } from '../../utils/hooks'
 import { StyledLink, Loader } from '../../utils/style/Atoms'
-import { ThemeContext } from '../../utils/context'
 
 const ResultsContainer = styled.div`
   display: flex;
@@ -53,30 +52,49 @@ const LoaderWrapper = styled.div`
   justify-content: center;
 `
 
-function formatFetchParams(answers) {
+// Récupère les numéros de question et les réponses pour crééer le params qui suivra le /result?
+export function formatQueryParams(answers) {
+  // Récupère les clés de l'object
   const answerNumbers = Object.keys(answers)
-
+  console.log(answerNumbers)
+  // Utilise reduce pour construire la chaîne de requête
   return answerNumbers.reduce((previousParams, answerNumber, index) => {
+    // Regarde s'il s'agit du premier paramètre
     const isFirstParam = index === 0
+
+    // S'il s'agit du premier parametre, ouvre des quotes '' qui se ferme à la fin de notre chaine
     const separator = isFirstParam ? '' : '&'
+
+    // Concaténation de la chaine
     return `${previousParams}${separator}a${answerNumber}=${answers[answerNumber]}`
   }, '')
 }
 
+export function formatJobList(title, listLength, index) {
+  if (index === listLength - 1) {
+      return title
+  }
+  return `${title},`
+}
+
 function Results() {
-  const { theme } = useContext(ThemeContext)
+  const { theme } = useTheme()
   const { answers } = useContext(SurveyContext)
-  const fetchParams = formatFetchParams(answers)
+  const fetchParams = formatQueryParams(answers)
+  console.log('=== fetchParams ===', fetchParams)
 
   const { data, isLoading, error } = useFetch(
     `http://localhost:8000/results?${fetchParams}`
   )
+
+  console.log('==== data ====', data)
 
   if (error) {
     return <span>Il y a un problème</span>
   }
 
   const resultsData = data?.resultsData
+  console.log('==== resultsData ====', resultsData)
 
   return isLoading ? (
     <LoaderWrapper>
@@ -92,8 +110,7 @@ function Results() {
               key={`result-title-${index}-${result.title}`}
               theme={theme}
             >
-              {result.title}
-              {index === resultsData.length - 1 ? '' : ','}
+              {formatJobList(result.title, resultsData.length, index)}
             </JobTitle>
           ))}
       </ResultsTitle>
