@@ -1,6 +1,7 @@
 import Card from '../../components/Card'
 import colors from '../../utils/style/colors'
 import styled from 'styled-components'
+import { NoUnderlineLink } from '../../utils/style/Atoms'
 import { Loader } from '../../utils/style/Atoms'
 import { useFetch, useTheme } from '../../utils/hooks'
 
@@ -54,12 +55,13 @@ export default function Freelances () {
       ) : (
         <CardsContainer>
           {freelancersList && freelancersList.map((profile, id) => (
-            <Card
-              key={`${profile.name}-${id}`}
-              label={profile.job}
-              title={profile.name}
-              picture={profile.picture}
-            />
+            <NoUnderlineLink key={`${profile.name}-${id}`} to={`/profile/${profile.id}`}>
+              <Card
+                label={profile.job}
+                title={profile.name}
+                picture={profile.picture}
+              />
+            </NoUnderlineLink>
           ))}
         </CardsContainer>
       )}

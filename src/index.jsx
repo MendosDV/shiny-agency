@@ -8,6 +8,7 @@ import Error from './components/Error'
 import Freelances from './pages/Freelances/'
 import Results from './pages/Results/'
 import Footer from './components/Footer'
+import ProfileContainer from './components/ProfileContainer'
 import GlobalStyle from './utils/style/GlobalStyle'
 import { ThemeProvider, SurveyProvider } from './utils/context'
 
@@ -20,11 +21,12 @@ ReactDOM.render(
           <GlobalStyle/>
           <Header />
           <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/survey/:questionNumber" element={<Survey />} />
-              <Route path="/results" element={<Results />} />
-              <Route path="/freelances" element={<Freelances />} />
-              <Route path="*" element={<Error />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/survey/:questionNumber" element={<Survey />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/freelances" element={<Freelances />} />
+            <Route path="/profile/:id" element={<ProfileContainer />} />
+            <Route path="*" element={<Error />} />
           </Routes>
           <Footer />
         </SurveyProvider>

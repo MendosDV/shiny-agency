@@ -34,3 +34,7 @@ export const StyledLink = styled(Link)`
     border-radius: 30px;
     background-color: ${colors.primary};`}
 `
+
+export const NoUnderlineLink = styled(Link)`
+    text-decoration: none;
+`
