@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import colors from '../../utils/style/colors'
 import { Loader } from '../../utils/style/Atoms'
 import { SurveyContext } from '../../utils/context'
-import { useFetch } from '../../utils/hooks'
+import { useFetch, useTheme} from '../../utils/hooks'
 
 const SurveyContainer = styled.div`
   display: flex;
@@ -15,17 +15,19 @@ const SurveyContainer = styled.div`
 
 const QuestionTitle = styled.h2`
   text-decoration: underline;
-  text-decoration-color: ${colors.primary};
+  text-decoration-color: ${({ theme }) => (theme === 'light' ? colors.primary : 'white')};
+  color: ${({ theme }) => (theme === 'light' ? colors.primary : 'white')};
 `
 
 const QuestionContent = styled.span`
   margin: 30px;
+  color: ${({ theme }) => (theme === 'light' ? 'black' : 'white')};
 `
 
 const LinkWrapper = styled.div`
   padding-top: 30px;
   & a {
-    color: black;
+    color: ${({ theme }) => (theme === 'light' ? 'black' : 'white')};
   }
   & a:first-of-type {
     margin-right: 20px;
@@ -57,7 +59,7 @@ const ReplyWrapper = styled.div`
 `
 
 export default function Survey() {
-
+  const { theme } = useTheme()
   const { questionNumber } = useParams()
   const questionNumberInt = parseInt(questionNumber)
   const nextQuestion = questionNumberInt + 1
@@ -78,11 +80,11 @@ export default function Survey() {
 
   return (
     <SurveyContainer>
-      <QuestionTitle>Question {questionNumber}</QuestionTitle>
+      <QuestionTitle theme={theme} >Question {questionNumber}</QuestionTitle>
       {isLoading ? (
         <Loader />
       ) : (
-        <QuestionContent>{surveyData && surveyData[questionNumber]}</QuestionContent>
+        <QuestionContent theme={theme}>{surveyData && surveyData[questionNumber]}</QuestionContent>
       )}
       <ReplyWrapper>
         <ReplyBox
@@ -98,7 +100,7 @@ export default function Survey() {
           Non
         </ReplyBox>
       </ReplyWrapper>
-      <LinkWrapper>
+      <LinkWrapper theme={theme} >
         <Link to={`/survey/${lastQuestion}`}>Précédent</Link>
         {surveyData && surveyData[questionNumberInt + 1] ? (
           <Link to={`/survey/${nextQuestion}`}>Suivant</Link>
